@@ -1,34 +1,30 @@
+#ifndef TIME_H
+#define TIME_H
+
+#ifdef __unix__
+#include <unistd.h>
+#elif defined _WIN32
+#include <windows.h>
+#define sleep(x) Sleep(1000 * (x))
+#endif
+
 #include <stdio.h>
-#include <stdlib.h>
-#include "./headers/menu.h"
-#include "./headers/structure.h"
-#include "./headers/timer.h"
+#include <time.h>
+#include <unistd.h>
 
-int main(){
-    intro();
+void timer()
+{
 
-    int a;
-
-    scanf("%d", &a);
-    return 0;
+    // scanf("%d", &minutes);
+    for (int i = 0; i >= 0; i--)
+    {
+        for (int j = 2; j >= 0; j--)
+        {
+            sleep(1); // sleep for 1 second
+        }
+    }
 }
-// <ESC>[36m
 
-// #include <stdio.h>
-// #include <time.h>
-
-// void timer() {
-//     int minutes;
-//     printf("Enter the number of minutes for the timer: ");
-//     scanf("%d", &minutes);
-//     for (int i = minutes; i >= 0; i--) {
-//         for (int j = 5; j >= 0; j--) {
-//             printf("Time remaining: %d:%d\n", i, j);
-//             sleep(1); // sleep for 1 second
-//         }
-//     }
-//     printf("Time's up!\n");
-// }
 
 // void stopwatch() {
 //     int seconds = 0;
@@ -54,3 +50,5 @@ int main(){
 //     }
 //     return 0;
 // }
+
+#endif
