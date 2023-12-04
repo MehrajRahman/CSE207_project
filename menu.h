@@ -2,6 +2,8 @@
 #define MENU_H
 #include <stdio.h>
 #include <stdlib.h>
+// #include <conio.h>
+#include "./timer.h"
 
 void Login_Menu()
 {
@@ -58,22 +60,45 @@ void Admin_Menu()
     printf("5.Logout\n");
 }
 
+void intro()
+{
+
+    printf("\n\n\n\t\t\t\t\t 	\033[33m||||||||||||    |||    ||    |||    |||        |||          \033[0m \n");
+    printf("\t\t\t\t\t 	\033[33m|||      |||    |||    ||    |||    |||        |||          \033[0m \n");
+    printf("\t\t\t\t\t	\033[33m|||              |||   ||   |||     |||        |||          \033[0m \n");
+    printf("\t\t\t\t\t	\033[33m|||||||||||      |||  |  |  |||     |||        |||          \033[0m \n");
+    printf("\t\t\t\t\t 	\033[33m|||||||||||       ||| |  | |||      |||        |||          \033[0m \n");
+    printf("\t\t\t\t\t 	\033[33m|||               ||| |  | |||      |||        |||          \033[0m \n");
+    printf("\t\t\t\t\t 	\033[33m|||      |||       ||||||||||       ||||||||||||||          \033[0m \n");
+    printf("\t\t\t\t\t	\033[33m||||||||||||       ||||  ||||       ||||||||||||||||        \033[0m \n\n\n");
+
+    printf("\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
+    printf("\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
+    timer();
+    system("clear");
+    Login_Menu();
+
+}
+
 void Student_menu()
 {
-    system("cls");
-    printf("\n\n\n\t\t\t\t\t\t\t\t\t\t\tWELCOME TO STUDENT MENU\n\n");
+    // system("cls");
+    printf("WELCOME TO FACULTY MENU");
+    // printf("\033[32mThis is green\033[0m");
     printf("1.My Profile\n");
     printf("2.Change Password\n");
-    printf("3.Advising");      // includes offerd course and retakeable courses
-    printf("4.Degree Review"); // shows all completed course and their grade
-    printf("5.Class Schedule");
+    printf("3.Advising\n");      // includes offerd course and retakeable courses
+    printf("4.Degree Review\n"); // shows all completed course and their grade
+    printf("5.Class Schedule\n");
     printf("6.Logout\n");
 }
 
 void Faculty_Menu()
 {
-    system("cls");
-    printf("\n\n\n\t\t\t\t\t\t\t\t\t\t\tWELCOME TO FACULTY MENU\n\n");
+    // system("cls");
+    // printf("WELCOME TO FACULTY MENU");
+    printf("\n\n\n\t\t\t\t\t\t\t\t\t\t\t 	\033[33mThis is yellow\033[0m \n\n");
+    printf("\033[32mThis is green\033[0m");
     printf("1.Profile\n"); // Shows name, Designation,depertment , edu background etc
     printf("2.Change Password\n");
     printf("3.Allocated Courses\n");        // shows allocated courses info like section , no. of students ,time,day
