@@ -2,6 +2,7 @@
   "files.associations": {
     "*.dat": "csv (pipe)",
     "*.csv": "csv (semicolon)",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "menu.h": "c"
   }
 }

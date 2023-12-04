@@ -77,7 +77,6 @@ void intro()
     timer();
     system("clear");
     Login_Menu();
-
 }
 
 void Student_menu()
