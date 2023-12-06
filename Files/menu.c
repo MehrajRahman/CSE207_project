@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 // #include <conio.h>
+#include "../headers/menu.h"
 #include "../headers/timer.h"
 
 void Login_Menu()
@@ -73,7 +74,7 @@ void intro()
     printf("\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
     printf("\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
     timer();
-    system("clear");
+    System("clear");
     Login_Menu();
 }
 
@@ -103,3 +104,5 @@ void Faculty_Menu()
     // printf("5.Student Evaluations\n");            //shows evaluation report for each course
     printf("6.Logout\n");
 }
+
+

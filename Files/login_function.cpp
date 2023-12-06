@@ -13,6 +13,8 @@ static const bool true = 1;
 #endif
 #endif
 
+#define MAX_LIMIT 50
+
 bool Login_Credential_Check_Student(char *username, char *password, int numStudents, Student *students)
 {
     bool found = false;
@@ -48,9 +50,11 @@ void Student_Login_page(int numOfStudents, Student *student)
     char studentUsername[50], studentPassword[50];
 
     printf("Enter Username: ");
-    scanf("%s", &studentUsername);
+    // scanf("%[^\n]%*c", &studentUsername);
+    fgets(studentUsername, MAX_LIMIT, stdin);
     printf("\nEnter Password: ");
-    scanf("%s", &studentPassword);
+    // scanf("%[^\n]%*c", &studentPassword);
+    fgets(studentPassword, MAX_LIMIT, stdin);
 
     while (!Login_Credential_Check_Student(studentUsername, studentPassword, numOfStudents, student))
     {
