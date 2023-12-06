@@ -3,6 +3,7 @@
     "*.dat": "csv (pipe)",
     "*.csv": "csv (semicolon)",
     "stdio.h": "c",
-    "menu.h": "c"
+    "menu.h": "c",
+    "structure_dynamic.h": "c"
   }
 }

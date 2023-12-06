@@ -18,6 +18,7 @@ typedef struct Student
     Course *completed_courses;
     char *advisor;
     float cgpa;
+    
 } Student;
 
 typedef struct Course
