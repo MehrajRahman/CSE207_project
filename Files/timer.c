@@ -2,6 +2,8 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "../headers/timer.h"
+
 void timer()
 {
     for (int i = 0; i >= 0; i--)
@@ -12,3 +14,4 @@ void timer()
         }
     }
 }
+

@@ -4,6 +4,7 @@
     "*.csv": "csv (semicolon)",
     "stdio.h": "c",
     "menu.h": "c",
-    "structure_dynamic.h": "c"
+    "structure_dynamic.h": "c",
+    "typeinfo": "c"
   }
 }

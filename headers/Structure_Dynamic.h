@@ -1,10 +1,14 @@
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
+
+
 typedef struct Course Course;
 typedef struct Faculty Faculty;
 typedef struct Student Student;
 typedef struct Department Department;
+
+
 
 typedef struct Student
 {
@@ -57,5 +61,10 @@ typedef struct Department
     Student *students;
     int student_count;
 } Department;
+
+// #define struct Student * stp
+// #define struct Department * dtp
+// #define struct Faculty * ftp
+// #define struct Course * ctp
 
 #endif
