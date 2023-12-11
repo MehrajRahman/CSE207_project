@@ -52,7 +52,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Project Supervisor</a>
+      <a href="#project-supervisor">Project Supervisor</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
       </ul>
@@ -75,7 +75,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+## Project Supervisor
 
 <img src="images/svisor.png" alt="Logo" width="100" height="100">
 
