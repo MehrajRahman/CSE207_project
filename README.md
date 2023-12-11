@@ -153,7 +153,9 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can compile the._
 
-1. Open cmd in your computer.
+1. Open cmd in your computer. if you are using Windows change the following parts of the code. Open makefile. On line 7 write this TARGET = $(PROJDIR)/Build/ewu_app.exe
+   Now change the file name of ewu_app to ewu_app.exe from Build directory.
+
 2. Clone the repo
    ```sh
    git clone https://github.com/MehrajRahman/CSE207_project.git
@@ -162,10 +164,17 @@ _Below is an example of how you can compile the._
    ```sh
    cd CSE207_project
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
+4. Run make command. this will construct your compiled file in the following directory. /Build/ewu_app
+   ```sh
+   make
    ```
+5. change directory.
+
+```sh
+   cd Build
+```
+
+6. compile.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
