@@ -4,7 +4,7 @@
 #include "../headers/menu.h"
 #include "../headers/logger.h"
 #include "../headers/LinearDS.h"
-// #include "try.h"s
+
 
 
 static struct logger* l=NULL;
@@ -26,7 +26,7 @@ int main(){
     init_systems();
     // Admin_Menu();
     // timer();
-    // struct Personalized_DS *Info_std = Singly_LL();
+    struct Personalized_DS *Info_std = Singly_LL();
 
     int choice;
     // do
@@ -54,7 +54,7 @@ int main(){
     //     }
     // } while (choice != 3);
 
-    // freeList(Info_std, STUDENT);
+    freeList(Info_std, STUDENT);
     shutdown_systems();
 
     return 0;
