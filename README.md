@@ -78,6 +78,7 @@
 ## About The Project
 
 [![Project Supervisor Screen Shot][product-screenshot]](https://github.com/MehrajRahman/CSE207_project/blob/main/svisor.png?raw=true)
+<img src="images/svisor.png" alt="Logo" width="80" height="80">
 
 ### Dr. Hasan Mahmood Aminul Islam,
 
