@@ -77,8 +77,7 @@
 
 ## About The Project
 
-[![Project Supervisor Screen Shot][product-screenshot]](https://github.com/MehrajRahman/CSE207_project/blob/main/svisor.png?raw=true)
-<img src="images/svisor.png" alt="Logo" width="80" height="80">
+<img src="images/svisor.png" alt="Logo" width="100" height="100">
 
 ### Dr. Hasan Mahmood Aminul Islam,
 
@@ -86,15 +85,23 @@
 
 #### East West University, Bangladesh
 
-Specialist System-on-Chip Software (5G) Nokia
-Nokia Headquarters, Espoo, Finland
-D.Sc in Technology (CSE)
-Aalto University, Finland
-M.Sc in Computer Science
-University of Helsinki, Finland
-B.Sc in CSE, BUET, Bangladesh
-Web Page: https://www.ewubd.edu/faculty-profile/mahmood.aminul
-Personal Website: https://hmaislam.github.io/myweb/
+##### Specialist System-on-Chip Software (5G) Nokia
+
+##### Nokia Headquarters, Espoo, Finland
+
+##### D.Sc in Technology (CSE)
+
+##### Aalto University, Finland
+
+##### M.Sc in Computer Science
+
+##### University of Helsinki, Finland
+
+##### B.Sc in CSE, BUET, Bangladesh
+
+##### Web Page: https://www.ewubd.edu/faculty-profile/mahmood.aminul
+
+##### Personal Website: https://hmaislam.github.io/myweb/
 
 <!--
 There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
