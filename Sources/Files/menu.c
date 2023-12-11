@@ -95,7 +95,7 @@ void intro()
             
             break;
         case 2:
-            // printStudents(Info_std);
+            
             log_print(l, "Exiting...\n");
             break;
         case 3:
