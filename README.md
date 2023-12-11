@@ -153,7 +153,7 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can compile the._
 
-1. Open cmd in your computer. if you are using Windows change the following parts of the code. Open makefile. On line 7 write this TARGET = $(PROJDIR)/Build/ewu_app.exe
+1. Open cmd in your computer. if you are using Windows change the following parts of the code. Open makefile. On line 7 write this TARGET = $(PROJDIR)/Build/ewu_app.exe.||
    Now change the file name of ewu_app to ewu_app.exe from Build directory.
 
 2. Clone the repo
@@ -175,6 +175,11 @@ _Below is an example of how you can compile the._
 ```
 
 6. compile.
+
+```sh
+   ./ewu_app //Linux
+   ./ewu_app.exe //Windows User
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
