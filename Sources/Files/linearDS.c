@@ -4,19 +4,23 @@
 #include <string.h>
 #include "../headers/Structure_Dynamic.h"
 #include "../headers/LinearDS.h"
+#include "../headers/logger.h"
 
-typedef struct Node
-{
-    void *dataPtr;
-    struct Node *next;
-} Node;
 
-typedef struct Personalized_DS
-{
-    Node *head;
-    Node *tail;
+static struct logger* l=NULL;
 
-} Personalized_DS;
+// typedef struct Node
+// {
+//     void *dataPtr;
+//     struct Node *next;
+// } Node;
+
+// typedef struct Personalized_DS
+// {
+//     Node *head;
+//     Node *tail;
+
+// } Personalized_DS;
 
 struct Node *createNode(void *data)
 {
@@ -68,33 +72,33 @@ void addStudentData(struct Personalized_DS *Info)
     char advisor[50];
     float cgpa;
 
-    printf("Enter student username: ");
+    log_print(l, "Enter student username: ");
     scanf("%s", username);
 
-    printf("Enter student password: ");
+    log_print(l, "Enter student password: ");
     scanf("%s", password);
 
-    printf("Enter student name: ");
+    log_print(l, "Enter student name: ");
     scanf("%s", name);
     fflush(stdin);
 
-    printf("Enter student ID: ");
+    log_print(l, "Enter student ID: ");
     scanf("%d", &id);
 
-    printf("Enter student department: ");
+    log_print(l, "Enter student department: ");
     scanf("%s", department);
     fflush(stdin);
 
-    printf("Enter completed credit hours: ");
+    log_print(l, "Enter completed credit hours: ");
     scanf("%f", &completed_credit);
 
     Course *current_semester_course = NULL;
     Course *completed_courses = NULL;
 
-    printf("Enter student advisor: ");
+    log_print(l, "Enter student advisor: ");
     scanf("%s", advisor);
 
-    printf("Enter student CGPA: ");
+    log_print(l, "Enter student CGPA: ");
     scanf("%f", &cgpa);
 
     Student *newStudent = (Student *)malloc(sizeof(Student));
@@ -121,19 +125,19 @@ void addFacultyData(struct Personalized_DS *Info)
     char department[50];
     char *designation;
 
-    printf("Enter faculty username: ");
+    log_print(l, "Enter faculty username: ");
     scanf("%s", username);
 
-    printf("Enter faculty password: ");
+    log_print(l, "Enter faculty password: ");
     scanf("%s", password);
 
-    printf("Enter faculty name: ");
+    log_print(l, "Enter faculty name: ");
     scanf("%s", name);
 
-    printf("Enter faculty department: ");
+    log_print(l, "Enter faculty department: ");
     scanf("%s", department);
 
-    printf("Enter faculty designation: ");
+    log_print(l, "Enter faculty designation: ");
     scanf("%s", designation);
 
     Faculty *newFaculty = (Faculty *)malloc(sizeof(Faculty));
@@ -158,28 +162,28 @@ void addCourseData(struct Personalized_DS *courseList)
     int student_number;
     char department[50];
 
-    printf("Enter course ID: ");
+    log_print(l, "Enter course ID: ");
     scanf("%s", course_id);
 
-    printf("Enter course name: ");
+    log_print(l, "Enter course name: ");
     scanf("%s", course_name);
 
-    printf("Enter course code: ");
+    log_print(l, "Enter course code: ");
     scanf("%d", &course_code);
 
-    printf("Enter allocated faculty: ");
+    log_print(l, "Enter allocated faculty: ");
     scanf("%s", allocated_faculty);
 
-    printf("Enter section: ");
+    log_print(l, "Enter section: ");
     scanf("%d", &section);
 
-    printf("Enter time slot: ");
+    log_print(l, "Enter time slot: ");
     scanf("%d", &time_slot);
 
-    printf("Enter student number: ");
+    log_print(l, "Enter student number: ");
     scanf("%d", &student_number);
 
-    printf("Enter department: ");
+    log_print(l, "Enter department: ");
     scanf("%s", department);
 
     Course *newCourse = (Course *)malloc(sizeof(Course));
@@ -209,13 +213,13 @@ void addDepartmentData(struct Personalized_DS *Info)
     Student *students = NULL;
     int student_count = 0;
 
-    printf("Enter department ID: ");
+    log_print(l, "Enter department ID: ");
     scanf("%49s", dept_id);
 
-    printf("Enter department name: ");
+    log_print(l, "Enter department name: ");
     scanf("%49s", name);
 
-    printf("Enter chairperson name: ");
+    log_print(l, "Enter chairperson name: ");
     scanf("%49s", chairperson);
 
     Department *newDepartment = (Department *)malloc(sizeof(Department));
@@ -266,16 +270,16 @@ void addStudentToCourse(struct Personalized_DS *studentList, Course *course, int
                 }
                 temp->next = newNode;
             }
-            printf("Student with ID %d added to the course.\n", studentId);
+            log_print(l, "Student with ID %d added to the course.\n", studentId);
         }
         else
         {
-            printf("Memory allocation failed.\n");
+            log_print(l, "Memory allocation failed.\n");
         }
     }
     else
     {
-        printf("Student with ID %d not found.\n", studentId);
+        log_print(l, "Student with ID %d not found.\n", studentId);
     }
 }
 
@@ -306,12 +310,12 @@ void addFacultyToCourse(struct Personalized_DS *facultyList, Course *course, cha
             }
             else
             {
-                printf("This course already has a faculty assigned.\n");
+                log_print(l, "This course already has a faculty assigned.\n");
             }
         }
     }
     else
     {
-        printf("Faculty with username %s not found.\n", facultyUsername);
+        log_print(l, "Faculty with username %s not found.\n", facultyUsername);
     }
 }

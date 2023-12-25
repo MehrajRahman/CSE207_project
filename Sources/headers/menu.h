@@ -1,8 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
 
-
-
 void Login_Menu();
 
 void Admin_Menu_Student();
@@ -20,6 +18,5 @@ void intro();
 void Student_menu();
 
 void Faculty_Menu();
-
 
 #endif
