@@ -1,0 +1,122 @@
+[
+  {
+    "username": "krouzet0",
+    "password": "aY2`u~,S0y",
+    "name": "Libby Jakab",
+    "id": "krouzet0@google.co.jp",
+    "department": "Flashset",
+    "advisor": "Katuscha Rouzet",
+    "cgpa": 48,
+    "current_semester_course": [{}, {}, {}],
+    "completed_courses": [{}, {}, {}, {}, {}],
+    "completed_credit": 84
+  },
+  {
+    "username": "lomullally1",
+    "password": "zA9{%`j/$%=",
+    "name": "Jed Weyman",
+    "id": "lomullally1@zimbio.com",
+    "department": "Wordware",
+    "advisor": "Leyla O'Mullally",
+    "cgpa": 1,
+    "current_semester_course": [{}, {}, {}, {}, {}],
+    "completed_courses": [{}, {}],
+    "completed_credit": 57
+  },
+  {
+    "username": "fflude2",
+    "password": "gA7=/J,2@(",
+    "name": "Annalee Rassmann",
+    "id": "fflude2@com.com",
+    "department": "Kazu",
+    "advisor": "Francesco Flude",
+    "cgpa": 100,
+    "current_semester_course": [{}, {}, {}, {}, {}, {}, {}],
+    "completed_courses": [{}, {}, {}, {}],
+    "completed_credit": 1
+  },
+  {
+    "username": "gbatting3",
+    "password": "dC1>AcX!2wT{~jT",
+    "name": "Edgardo Kindleysides",
+    "id": "gbatting3@umn.edu",
+    "department": "Kwilith",
+    "advisor": "Gaby Batting",
+    "cgpa": 53,
+    "current_semester_course": [{}, {}, {}, {}, {}],
+    "completed_courses": [{}, {}, {}, {}],
+    "completed_credit": 46
+  },
+  {
+    "username": "jgavin4",
+    "password": "fY5<ZGq4iv(~#{P",
+    "name": "Margaretta Dubarry",
+    "id": "jgavin4@dmoz.org",
+    "department": "Gevee",
+    "advisor": "Johannes Gavin",
+    "cgpa": 52,
+    "current_semester_course": [],
+    "completed_courses": [{}],
+    "completed_credit": 97
+  },
+  {
+    "username": "tcaldeyroux5",
+    "password": "bX0=F~lhgYgH3BYT",
+    "name": "Roze Rockliffe",
+    "id": "tcaldeyroux5@fotki.com",
+    "department": "Latz",
+    "advisor": "Truda Caldeyroux",
+    "cgpa": 21,
+    "current_semester_course": [],
+    "completed_courses": [{}, {}, {}, {}],
+    "completed_credit": 26
+  },
+  {
+    "username": "qhinchon6",
+    "password": "gY5$Ki8tC",
+    "name": "Yehudit Lindenman",
+    "id": "qhinchon6@google.cn",
+    "department": "Photofeed",
+    "advisor": "Quill Hinchon",
+    "cgpa": 28,
+    "current_semester_course": [{}],
+    "completed_courses": [{}],
+    "completed_credit": 76
+  },
+  {
+    "username": "bhaily7",
+    "password": "xC9.'`7E#AX@",
+    "name": "Boigie Ryall",
+    "id": "bhaily7@flavors.me",
+    "department": "Linklinks",
+    "advisor": "Ban Haily",
+    "cgpa": 2,
+    "current_semester_course": [{}, {}, {}, {}, {}, {}, {}],
+    "completed_courses": [{}, {}, {}, {}],
+    "completed_credit": 75
+  },
+  {
+    "username": "adiamond8",
+    "password": "oQ6!_ZNH",
+    "name": "Peggy Adrianello",
+    "id": "adiamond8@mozilla.com",
+    "department": "Topicshots",
+    "advisor": "Ambrose Diamond",
+    "cgpa": 69,
+    "current_semester_course": [{}, {}, {}],
+    "completed_courses": [{}, {}],
+    "completed_credit": 30
+  },
+  {
+    "username": "vesmond9",
+    "password": "vP3`%|oZSs.d(",
+    "name": "Gabriellia Petschel",
+    "id": "vesmond9@people.com.cn",
+    "department": "Blogtag",
+    "advisor": "Virginia Esmond",
+    "cgpa": 2,
+    "current_semester_course": [{}, {}, {}, {}, {}, {}, {}],
+    "completed_courses": [],
+    "completed_credit": 17
+  }
+]

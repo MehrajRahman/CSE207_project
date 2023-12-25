@@ -110,13 +110,11 @@ void intro()
 
 void Student_menu()
 {
-    // system("cls");
     log_print(l, "WELCOME TO FACULTY MENU");
-    // log_print(l, "\033[32mThis is green\033[0m");
     log_print(l, "1.My Profile\n");
     log_print(l, "2.Change Password\n");
-    log_print(l, "3.Advising\n");      // includes offerd course and retakeable courses
-    log_print(l, "4.Degree Review\n"); // shows all completed course and their grade
+    log_print(l, "3.Advising\n");     
+    log_print(l, "4.Degree Review\n"); 
     log_print(l, "5.Class Schedule\n");
     log_print(l, "6.Logout\n");
 }
@@ -129,9 +127,9 @@ void Faculty_Menu()
     log_print(l, "\033[32mThis is green\033[0m");
     log_print(l, "1.Profile\n"); // Shows name, Designation,depertment , edu background etc
     log_print(l, "2.Change Password\n");
-    log_print(l, "3.Allocated Courses\n");        // shows allocated courses info like section , no. of students ,time,day
-    log_print(l, "4.Browse student by course\n"); // shows student list of each allocated courses
-    // log_print(l, "5.Student Evaluations\n");            //shows evaluation report for each course
+    log_print(l, "3.Allocated Courses\n");        
+    log_print(l, "4.Browse student by course\n"); 
+         
     log_print(l, "6.Logout\n");
 }
 
