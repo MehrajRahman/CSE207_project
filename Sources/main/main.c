@@ -54,7 +54,7 @@ int main(){
     //     }
     // } while (choice != 3);
 
-    freeList(Info_std, STUDENT);
+    // freeList(Info_std, STUDENT);
     shutdown_systems();
 
     return 0;

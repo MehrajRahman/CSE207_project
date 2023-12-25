@@ -5,6 +5,7 @@
 // #include <stdlib.h>
 // #include <string.h>
 #include "Structure_Dynamic.h"
+#include "logger.h"
 
 struct Node
 {
