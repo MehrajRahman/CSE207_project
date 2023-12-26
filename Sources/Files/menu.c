@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-// #include <conio.h>
+#include <stdint.h>
 #include "../headers/menu.h"
 #include "../headers/timer.h"
 #include "../headers/logger.h"
@@ -19,10 +19,44 @@ void Login_Menu()
 
 void Admin_Menu_Student()
 {
-    log_print(l, "1.Add Student \n");
+   
+
+
+    uint8_t choice;
+
+    do
+    {
+         log_print(l, "1.Add Student \n");
     log_print(l, "2.Delete Student \n");
     log_print(l, "3.Update Student Information \n");
     log_print(l, "4.View All Students \n");
+
+       
+        scanf("%hhu", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            Admin_Menu_Student();
+            break;
+        case 2:
+            Admin_Menu_Faculty();
+            break;
+        case 3:
+            Admin_Menu_Faculty();
+            break;
+        case 4:
+            Admin_Menu_Department();
+            break;
+        case 5:
+            log_print(l, "Goodbye!!!!.\n");
+            timer();
+            return;
+            break;
+        default:
+            log_print(l, "Invalid choice! Please enter a valid option.\n");
+        }
+    } while (choice != 6);
 }
 
 void Admin_Menu_Faculty()
@@ -55,19 +89,66 @@ void Admin_Menu_Department()
 
 void Admin_Menu()
 {
-    log_print(l, "welcome\n");
-    log_print(l, "\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-    log_print(l, "1.Student management\n");
-    log_print(l, "2.Faculty management\n");
-    log_print(l, "3.Course management\n");
-    log_print(l, "4.Department management\n");
-    log_print(l, "5.Logout\n");
+    
+
+    uint8_t choice;
+
+    do
+    {
+        log_print(l, "welcome\n");
+        log_print(l, "\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
+        log_print(l, "1.Student management\n");
+        log_print(l, "2.Faculty management\n");
+        log_print(l, "3.Course management\n");
+        log_print(l, "4.Department management\n");
+        log_print(l, "5.Return to Main Menu\n");
+        log_print(l, "6.Logout\n");
+
+       
+        scanf("%hhu", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            Admin_Menu_Student();
+            break;
+        case 2:
+            Admin_Menu_Faculty();
+            break;
+        case 3:
+            Admin_Menu_Faculty();
+            break;
+        case 4:
+            Admin_Menu_Department();
+            break;
+        case 5:
+            log_print(l, "Goodbye!!!!.\n");
+            timer();
+            return;
+            break;
+        default:
+            log_print(l, "Invalid choice! Please enter a valid option.\n");
+        }
+    } while (choice != 6);
+}
+
+void header()
+{
+    // l = init_logger(stdout, stderr, stderr);
+    log_print(l, "\t\t\t\t\t     \033[33m _______   ___     ___      __   __    __ \033[0m \n");
+    log_print(l, "\t\t\t\t\t     \033[33m|   ____|\\   \\  //  \\  //  / |  |  |  |          \033[0m \n");
+    log_print(l, "\t\t\t\t\t     \033[33m|  |__    \\   \\//    \\//  /  |  |  |  |        \033[0m \n");
+    log_print(l, "\t\t\t\t\t     \033[33m|   __|    \\      __       /   |  |  |  |        \033[0m \n");
+    log_print(l, "\t\t\t\t\t     \033[33m|  |____    \\    //\\     /    |  `--'  |          \033[0m \n");
+    log_print(l, "\t\t\t\t\t     \033[33m|_______|    \\__//  \\__ /     \\______/           \033[0m \n");
+
+    log_print(l, "\t\t    \033[34m -------------------------------------------------------------------------------------  \033[0m \n");
 }
 
 void intro()
 {
     l = init_logger(stdout, stderr, stderr);
-      log_print(l, "\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
+    log_print(l, "\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
     log_print(l, "\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
     
     log_print(l, "\n\n\n\t\t\t\t\t 	\033[33m||||||||||||    |||    ||    |||    |||        |||          \033[0m \n");
@@ -84,15 +165,51 @@ void intro()
     
 }
 
-void Student_menu()
+void Student_menu(char *username)
 {
-    log_print(l, "WELCOME TO FACULTY MENU");
-    log_print(l, "1.My Profile\n");
-    log_print(l, "2.Change Password\n");
-    log_print(l, "3.Advising\n");     
-    log_print(l, "4.Degree Review\n"); 
-    log_print(l, "5.Class Schedule\n");
-    log_print(l, "6.Logout\n");
+    uint8_t choice;
+    
+    do
+    {
+        log_print(l, "WELCOME TO STUDENT MENU");
+        log_print(l, "1.My Profile\n");
+        log_print(l, "2.Change Password\n");
+        log_print(l, "3.Advising\n");     
+        log_print(l, "4.Degree Review\n"); 
+        log_print(l, "5.Class Schedule\n");
+        log_print(l, "6.Logout\n");
+        log_print(l, "7.Return to main menu.\n");
+
+       
+        scanf("%hhu", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            printSingleStudentInfo(username);
+            break;
+        case 2:
+            StudentChangePassword(username);
+            break;
+        case 3:
+            addCourseToStudent(username);
+            break;
+        case 4:
+            log_print(l, "Work In Progress.\n");
+            break;
+        case 5:
+            log_print(l, "Work In Progress.\n");
+            break;
+        case 6:
+            log_print(l, "Goodbye!!!!.\n");
+            timer();
+            return;
+            break;
+        default:
+            
+            log_print(l, "Invalid choice! Please enter a valid option.\n");
+        }
+    } while (choice != 7);
 }
 
 void Faculty_Menu()

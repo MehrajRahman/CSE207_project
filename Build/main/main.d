@@ -6,4 +6,6 @@
  /home/mehraj/Desktop/ewu/dsa209/main_projects/Sources/main/../headers/logger.h \
  /home/mehraj/Desktop/ewu/dsa209/main_projects/Sources/main/../headers/LinearDS.h \
  /home/mehraj/Desktop/ewu/dsa209/main_projects/Sources/main/../headers/portal_system.h \
- /home/mehraj/Desktop/ewu/dsa209/main_projects/Sources/main/../headers/logger.h
+ /home/mehraj/Desktop/ewu/dsa209/main_projects/Sources/main/../headers/logger.h \
+ /home/mehraj/Desktop/ewu/dsa209/main_projects/Sources/main/../headers/utils.h \
+ /home/mehraj/Desktop/ewu/dsa209/main_projects/Sources/main/../headers/login_function.h

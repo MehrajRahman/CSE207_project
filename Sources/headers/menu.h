@@ -17,7 +17,7 @@ void intro();
 
 void header();
 
-void Student_menu();
+void Student_menu(char *username);
 
 void Faculty_Menu();
 

@@ -1,26 +1,18 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../headers/portal_system.h"
-#include "../headers/LinearDS.h"
-#include "../headers/logger.h"
 
+typedef struct Node
+{
+    void *dataPtr;
+    struct Node *next;
+} Node;
 
-static struct logger* l=NULL;
+typedef struct Personalized_DS
+{
+    Node *head;
+    Node *tail;
 
-// typedef struct Node
-// {
-//     void *dataPtr;
-//     struct Node *next;
-// } Node;
-
-// typedef struct Personalized_DS
-// {
-//     Node *head;
-//     Node *tail;
-
-// } Personalized_DS;
+} Personalized_DS;
 
 struct Node *createNode(void *data)
 {
@@ -61,261 +53,906 @@ void add(struct Personalized_DS *Info, void *data)
     }
 }
 
+
 void addStudentData(struct Personalized_DS *Info)
 {
-    char username[50];
-    char password[50];
-    char name[50];
-    int id;
-    char department[50];
-    float completed_credit;
-    char advisor[50];
-    float cgpa;
-
-    log_print(l, "Enter student username: ");
-    scanf("%s", username);
-
-    log_print(l, "Enter student password: ");
-    scanf("%s", password);
-
-    log_print(l, "Enter student name: ");
-    scanf("%s", name);
-    fflush(stdin);
-
-    log_print(l, "Enter student ID: ");
-    scanf("%d", &id);
-
-    log_print(l, "Enter student department: ");
-    scanf("%s", department);
-    fflush(stdin);
-
-    log_print(l, "Enter completed credit hours: ");
-    scanf("%f", &completed_credit);
-
-    Course *current_semester_course = NULL;
-    Course *completed_courses = NULL;
-
-    log_print(l, "Enter student advisor: ");
-    scanf("%s", advisor);
-
-    log_print(l, "Enter student CGPA: ");
-    scanf("%f", &cgpa);
-
     Student *newStudent = (Student *)malloc(sizeof(Student));
+    if (newStudent == NULL)
+    {
+        printf("Memory allocation failed!\n");
+        return;
+    }
 
-    newStudent->username = strdup(username);
-    newStudent->password = strdup(password);
-    newStudent->name = strdup(name);
-    newStudent->id = id;
-    newStudent->department = strdup(department);
-    newStudent->completed_credit = completed_credit;
-    newStudent->current_semester_course = current_semester_course;
-    newStudent->completed_courses = completed_courses;
-    newStudent->advisor = strdup(advisor);
-    newStudent->cgpa = cgpa;
+    printf("Enter student username: ");
+    scanf("%49s", newStudent->username);
 
-    add(Info, newStudent);
+    printf("Enter student password: ");
+    scanf("%49s", newStudent->password);
+
+    printf("Enter student name: ");
+    scanf("%49s", newStudent->name);
+
+    printf("Enter student ID: ");
+    scanf("%hu", &newStudent->id);
+
+    int depChoice;
+    do
+    {
+        printf("Choose student's department:\n");
+        printf("1. CSE\n2. EEE\n3. Pharmacy\n4. Department of Mathematical and Physical Sciences\n5. Non-Elective\n");
+        scanf("%d", &depChoice);
+
+        if (depChoice < 1 || depChoice > 5)
+        {
+            printf("Invalid choice. Please choose again.\n");
+        }
+    } while (depChoice < 1 || depChoice > 5);
+
+    memset(newStudent->std_dep, 0, sizeof(newStudent->std_dep));
+    newStudent->std_dep[depChoice - 1] = true;
+
+    switch (depChoice)
+    {
+    case 1:
+        strcpy(newStudent->department, "CSE");
+        break;
+    case 2:
+        strcpy(newStudent->department, "EEE");
+        break;
+    case 3:
+        strcpy(newStudent->department, "Pharmacy");
+        break;
+    case 4:
+        strcpy(newStudent->department, "Department of Mathematical and Physical Sciences");
+        break;
+    case 5:
+        strcpy(newStudent->department, "Non-Elective");
+        break;
+    default:
+        strcpy(newStudent->department, "Non-Elective");
+        break;
+    }
+
+    printf("Enter student advisor: ");
+    scanf("%49s", newStudent->advisor);
+
+    newStudent->cgpa = 0;
+    newStudent->completed_credit = 0;
+    newStudent->completed_courses = NULL;
+    newStudent->num_current_courses = 0;
+    memset(newStudent->current_semester_courses, 0, sizeof(newStudent->current_semester_courses));
+    newStudent->num_current_courses = 0;
+
+    // add(Info, newStudent);
+
+    FILE *file = fopen("student_data.dat", "ab");
+    if (file != NULL)
+    {
+        fwrite(newStudent, sizeof(Student), 1, file);
+        fclose(file);
+    }
+    else
+    {
+        printf("Error opening file for writing!\n");
+    }
+
+    free(newStudent);
 }
 
+
+void addCourseToStudent(char *username)
+{
+    FILE *studentFile = fopen("../Sources/db/student_data.dat", "r+b");
+    FILE *courseFile = fopen("../Sources/db/Course_data.dat", "rb");
+
+    char inputUsername[MAX_LENGTH];
+    printf("Enter student username to view available courses: ");
+    scanf("%49s", inputUsername);
+
+    Student student;
+    bool studentFound = false;
+
+    while (fread(&student, sizeof(Student), 1, studentFile) == 1)
+    {
+        if (strcmp(student.username, inputUsername) == 0)
+        {
+            studentFound = true;
+            break;
+        }
+    }
+
+    if (!studentFound)
+    {
+        printf("Student not found with the given username: %s\n", inputUsername);
+        fclose(studentFile);
+        fclose(courseFile);
+        return;
+    }
+
+    bool departmentHasCourses = false;
+
+    fseek(courseFile, 0, SEEK_SET);
+    Course course;
+
+    printf("%-12s%-12s%-10s\n", "Course ID", "Course Name", "Course Credit");
+    printf("------------------------------------------\n");
+    while (fread(&course, sizeof(Course), 1, courseFile) == 1)
+    {
+        if (
+            (strcmp(student.department, "CSE") == 0 && course.dept_course[0]) ||
+            (strcmp(student.department, "EEE") == 0 && course.dept_course[1]) ||
+            (strcmp(student.department, "Pharmacy") == 0 && course.dept_course[2]) ||
+            (strcmp(student.department, "Mathematical and Physical Sciences") == 0 && course.dept_course[3]) ||
+            (strcmp(student.department, "Non-Elective") == 0 && course.dept_course[4]))
+        {
+            printf("  %-12s%-12s%-10.2f\n", course.course_id, course.course_name, course.course_credit);
+            departmentHasCourses = true;
+        }
+    }
+
+    if (!departmentHasCourses)
+    {
+        printf("No courses available for your department.\n");
+        return;
+    }
+
+    int depIndex = -1;
+
+    for (int i = 0; i < 5; ++i)
+    {
+        if (student.std_dep[i])
+        {
+            depIndex = i;
+            break;
+        }
+    }
+
+    int courseCount = 0;
+    const int MAX_CURRENT_COURSES = 5;
+
+    while (courseCount < 5)
+    {
+        printf("Enter Course ID %d: ", courseCount + 1);
+        char selectedCourseID[MAX_LENGTH];
+        scanf("%49s", selectedCourseID);
+
+        if (strcmp(selectedCourseID, "done") == 0)
+        {
+            if (courseCount < 3)
+            {
+                printf("Minimum %d courses need to be selected.\n", 3);
+            }
+            else
+            {
+                break;
+            }
+        }
+        else
+        {
+            bool found = false;
+
+            fseek(courseFile, 0, SEEK_SET);
+            while (fread(&course, sizeof(Course), 1, courseFile) == 1)
+            {
+                if (depIndex != -1 && course.dept_course[depIndex] && strcmp(course.course_id, selectedCourseID) == 0)
+                {
+                    if (student.num_current_courses < MAX_CURRENT_COURSES)
+                    {
+                        student.current_semester_courses[student.num_current_courses++] = course;
+                        found = true;
+                        courseCount++;
+                    }
+                    else
+                    {
+                        printf("Maximum number of courses reached for this semester.\n");
+                        break;
+                    }
+                }
+            }
+            if (!found)
+            {
+                printf("Course ID %s not found or not available for your department. Please try again.\n", selectedCourseID);
+            }
+        }
+    }
+
+    if (studentFound)
+    {
+        fseek(studentFile, -sizeof(Student), SEEK_CUR);
+        fwrite(&student, sizeof(Student), 1, studentFile);
+    }
+    else
+    {
+        printf("Student not found with the given username: %s\n", inputUsername);
+    }
+
+    fclose(studentFile);
+    fclose(courseFile);
+}
+
+void printStudentData()
+{
+    FILE *file = fopen("../Sources/db/student_data.dat", "rb");
+    if (file != NULL)
+    {
+        Student student;
+
+        while (fread(&student, sizeof(Student), 1, file) == 1)
+        {
+            printf("Student Username: %s\n", student.username);
+            printf("Student Password: %s\n", student.password);
+            printf("Student Name: %s\n", student.name);
+            printf("Student ID: %d\n", student.id);
+            printf("Student Department: %s\n", student.department);
+            printf("Completed Credit Hours: %.2f\n", student.completed_credit);
+            printf("Student Advisor: %s\n", student.advisor);
+            printf("Student CGPA: %.2f\n", student.cgpa);
+            printf("Department Information:\n");
+            if (student.std_dep[0])
+                printf("  CSE\n");
+            if (student.std_dep[1])
+                printf("  EEE\n");
+            if (student.std_dep[2])
+                printf("  Pharmacy\n");
+            if (student.std_dep[3])
+                printf("  Mathematical and Physical Sciences\n");
+            if (student.std_dep[4])
+                printf("  Non-Elective\n");
+
+            printf("Allocated Courses:\n");
+            if (student.num_current_courses > 0 && student.current_semester_courses != NULL)
+            {
+                for (int i = 0; i < student.num_current_courses; ++i)
+                {
+                    printf("- Course ID: %s\n", student.current_semester_courses[i].course_id);
+                    printf("  Course Name: %s\n", student.current_semester_courses[i].course_name);
+                }
+            }
+            else
+            {
+                printf("No allocated courses for this student.\n");
+            }
+            printf("\n");
+
+            // free(student.current_semester_courses);
+        }
+
+        fclose(file);
+    }
+    else
+    {
+        printf("Error opening file for reading!\n");
+    }
+}
+
+// 
+/*
+
+
+
+
+
+*/
 void addFacultyData(struct Personalized_DS *Info)
 {
-    char username[50];
-    char password[50];
-    char name[50];
-    char department[50];
-    char *designation;
-
-    log_print(l, "Enter faculty username: ");
-    scanf("%s", username);
-
-    log_print(l, "Enter faculty password: ");
-    scanf("%s", password);
-
-    log_print(l, "Enter faculty name: ");
-    scanf("%s", name);
-
-    log_print(l, "Enter faculty department: ");
-    scanf("%s", department);
-
-    log_print(l, "Enter faculty designation: ");
-    scanf("%s", designation);
-
     Faculty *newFaculty = (Faculty *)malloc(sizeof(Faculty));
+    Course *allocated_courses = NULL;
 
-    newFaculty->username = strdup(username);
-    newFaculty->password = strdup(password);
-    newFaculty->name = strdup(name);
-    newFaculty->department = strdup(department);
-    newFaculty->designation = strdup(designation);
+    fflush(stdin);
+    printf("Enter faculty username: ");
+    scanf("%49s", newFaculty->username);
+
+    fflush(stdin);
+    printf("Enter faculty password: ");
+    scanf("%49s", newFaculty->password);
+    fflush(stdin);
+
+    printf("Enter faculty name: ");
+    scanf("%49s", newFaculty->name);
+
+    fflush(stdin);
+    printf("Enter faculty department: ");
+    scanf("%49s", newFaculty->department);
+
+    fflush(stdin);
+    printf("Enter faculty designation: ");
+    scanf("%49s", newFaculty->designation);
+
+    fflush(stdin);
+    printf("Enter faculty educational background: ");
+    scanf("%49s", newFaculty->educational_background);
+
+    newFaculty->allocated_courses = allocated_courses;
+    newFaculty->allocated_courses_count = 0;
 
     add(Info, newFaculty);
+
+    FILE *file = fopen("../Source/db/faculty_data.dat", "ab");
+    if (file != NULL)
+    {
+        fwrite(newFaculty, sizeof(Faculty), 1, file);
+        fclose(file);
+    }
+    else
+    {
+        printf("Error opening file for writing!\n");
+    }
 }
 
-void addCourseData(struct Personalized_DS *courseList)
+void printFacultyData()
 {
-    char course_id[50];
-    char course_name[50];
-    int course_code;
-    char allocated_faculty[50];
-    int section;
-    int time_slot;
-    int student_number;
-    char department[50];
+    FILE *file = fopen("../Sources/db/faculty_data.dat", "rb");
+    if (file != NULL)
+    {
+        Faculty *faculty = (Faculty *)malloc(sizeof(Faculty));
 
-    log_print(l, "Enter course ID: ");
-    scanf("%s", course_id);
+        while (fread(faculty, sizeof(Faculty), 1, file) == 1)
+        {
+            printf("Faculty Username: %s\n", faculty->username);
+            printf("Faculty Password: %s\n", faculty->password);
+            printf("Faculty Name: %s\n", faculty->name);
+            printf("Faculty Department: %s\n", faculty->department);
+            printf("Faculty Designation: %s\n", faculty->designation);
+            printf("Faculty Educational Background: %s\n", faculty->educational_background);
 
-    log_print(l, "Enter course name: ");
-    scanf("%s", course_name);
+            printf("Allocated Courses:\n");
+            if (faculty->allocated_courses_count > 0)
+            {
+                for (uint16_t i = 0; i < faculty->allocated_courses_count; ++i)
+                {
+                    printf("- Course ID: %s\n", faculty->allocated_courses[i].course_id);
+                    printf("  Course Name: %s\n", faculty->allocated_courses[i].course_name);
+                }
+            }
+            else
+            {
+                printf("No allocated courses for this faculty.\n");
+            }
+            printf("\n");
+        }
 
-    log_print(l, "Enter course code: ");
-    scanf("%d", &course_code);
+        fclose(file);
+    }
+    else
+    {
+        printf("Error opening file for reading!\n");
+    }
+}
 
-    log_print(l, "Enter allocated faculty: ");
-    scanf("%s", allocated_faculty);
-
-    log_print(l, "Enter section: ");
-    scanf("%d", &section);
-
-    log_print(l, "Enter time slot: ");
-    scanf("%d", &time_slot);
-
-    log_print(l, "Enter student number: ");
-    scanf("%d", &student_number);
-
-    log_print(l, "Enter department: ");
-    scanf("%s", department);
-
+void addCourseData(struct Personalized_DS *courseList, struct Personalized_DS *facultyList)
+{
     Course *newCourse = (Course *)malloc(sizeof(Course));
 
-    newCourse->course_id = strdup(course_id);
-    newCourse->course_name = strdup(course_name);
-    newCourse->course_code = course_code;
-    newCourse->allocated_faculty = strdup(allocated_faculty);
-    newCourse->section = section;
-    newCourse->time_slot = time_slot;
-    newCourse->student_number = student_number;
-    newCourse->department = strdup(department);
-    newCourse->students_list = NULL;
+    for (int i = 0; i < 5; ++i)
+    {
+        newCourse->dept_course[i] = false;
+    }
 
-    add(courseList, newCourse);
+    printf("Enter course ID: ");
+    scanf("%49s", newCourse->course_id);
+    fflush(stdin);
+
+    printf("Enter course name: ");
+    scanf("%49s", newCourse->course_name);
+    fflush(stdin);
+
+    printf("Enter course code: ");
+    scanf("%hu", &newCourse->course_code);
+    fflush(stdin);
+
+    printf("Enter section: ");
+    scanf("%hu", &newCourse->section);
+    fflush(stdin);
+
+    printf("Enter time slot: ");
+    scanf("%hu", &newCourse->time_slot);
+    fflush(stdin);
+
+    printf("Enter student number: ");
+    scanf("%hu", &newCourse->student_number);
+    fflush(stdin);
+
+    printf("Available Departments for the Course:\n");
+    printf("1. CSE\n");
+    printf("2. EEE\n");
+    printf("3. Pharmacy\n");
+    printf("4. Mathematical and Physical Sciences\n");
+    printf("5. Non-elective Courses\n");
+    printf("Select the departments (separated by commas): ");
+
+    int departmentChoice;
+    do
+    {
+        scanf("%d", &departmentChoice);
+        newCourse->dept_course[departmentChoice - 1] = true;
+    } while (getchar() == ',');
+
+    printf("Enter course credit: ");
+    scanf("%f", &newCourse->course_credit);
+    fflush(stdin);
+
+    printf("Enter minimum credit required: ");
+    scanf("%f", &newCourse->min_credit_required);
+    fflush(stdin);
+
+    printf("Enter department: ");
+    scanf("%49s", newCourse->department);
+    fflush(stdin);
+
+    newCourse->students_list = NULL;
+    newCourse->allocated_faculty = NULL;
+
+    // add(courseList, newCourse);
+
+    FILE *file = fopen("../Sources/db/Course_data.dat", "ab");
+    if (file != NULL)
+    {
+        fwrite(newCourse, sizeof(Course), 1, file);
+        fclose(file);
+    }
+    else
+    {
+        printf("Error opening file for writing!\n");
+    }
+}
+
+void printCourseData(struct Personalized_DS *courseList)
+{
+    FILE *file = fopen("../Sources/db/Course_data.dat", "rb");
+    if (file != NULL)
+    {
+        Course *course = (Course *)malloc(sizeof(Course));
+
+        while (fread(course, sizeof(Course), 1, file) == 1)
+        {
+            printf("Course ID: %s\n", course->course_id);
+            printf("Course Name: %s\n", course->course_name);
+            printf("Course Code: %d\n", course->course_code);
+            printf("Section: %d\n", course->section);
+            printf("Time Slot: %d\n", course->time_slot);
+            printf("Student Number: %d\n", course->student_number);
+            printf("Course Credit: %.2f\n", course->course_credit);
+            printf("Minimum Credit Required: %.2f\n", course->min_credit_required);
+            printf("Department: %s\n", course->department);
+
+            printf("Available Departments for the Course:\n");
+            printf("1. CSE: %s\n", course->dept_course[0] ? "Yes" : "No");
+            printf("2. EEE: %s\n", course->dept_course[1] ? "Yes" : "No");
+            printf("3. Pharmacy: %s\n", course->dept_course[2] ? "Yes" : "No");
+            printf("4. Mathematical and Physical Sciences: %s\n", course->dept_course[3] ? "Yes" : "No");
+            printf("5. Non-elective Courses: %s\n", course->dept_course[4] ? "Yes" : "No");
+
+            if (course->allocated_faculty != NULL)
+            {
+                printf("Allocated Faculty: %s\n", course->allocated_faculty->username);
+            }
+            else
+            {
+                printf("Allocated Faculty: None\n");
+            }
+            printf("Students List:\n");
+            if (course->students_list == NULL)
+            {
+                printf("No students enrolled.\n");
+            }
+            else
+            {
+                for (uint16_t i = 0; i < course->student_number; ++i)
+                {
+                    printf("- %s\n", course->students_list[i].username);
+                }
+            }
+
+            printf("\n");
+        }
+
+        fclose(file);
+    }
+    else
+    {
+        printf("Error opening file for reading!\n");
+    }
 }
 
 void addDepartmentData(struct Personalized_DS *Info)
 {
-    char dept_id[50];
-    char name[50];
-    Course *courses = NULL;
-    int course_count = 0;
-    Faculty *faculties = NULL;
-    int faculty_count = 0;
-    char chairperson[50];
-    Student *students = NULL;
-    int student_count = 0;
-
-    log_print(l, "Enter department ID: ");
-    scanf("%49s", dept_id);
-
-    log_print(l, "Enter department name: ");
-    scanf("%49s", name);
-
-    log_print(l, "Enter chairperson name: ");
-    scanf("%49s", chairperson);
-
     Department *newDepartment = (Department *)malloc(sizeof(Department));
-    newDepartment->dept_id = strdup(dept_id);
-    newDepartment->name = strdup(name);
-    newDepartment->chairperson = strdup(chairperson);
-    newDepartment->courses = courses;
-    newDepartment->course_count = course_count;
-    newDepartment->faculties = faculties;
-    newDepartment->faculty_count = faculty_count;
-    newDepartment->students = students;
-    newDepartment->student_count = student_count;
+
+    printf("Enter department ID: ");
+    scanf("%49s", newDepartment->dept_id);
+    fflush(stdin);
+
+    printf("Enter department name: ");
+    scanf("%49s", newDepartment->name);
+    fflush(stdin);
+
+    printf("Enter chairperson name: ");
+    scanf("%49s", newDepartment->chairperson);
+    fflush(stdin);
+
+    newDepartment->courses = NULL;
+    newDepartment->course_count = 0;
+    newDepartment->faculties = NULL;
+    newDepartment->faculty_count = 0;
+    newDepartment->students = NULL;
+    newDepartment->student_count = 0;
 
     add(Info, newDepartment);
+
+    FILE *file = fopen("../Sources/db/Department_data.dat", "ab");
+    if (file != NULL)
+    {
+        fwrite(newDepartment, sizeof(Department), 1, file);
+        fclose(file);
+    }
+    else
+    {
+        printf("Error opening file for writing!\n");
+    }
 }
 
-void addStudentToCourse(struct Personalized_DS *studentList, Course *course, int studentId)
+void printDepartmentData(struct Personalized_DS *departmentlist)
 {
-    struct Node *current = studentList->head;
-    Student *studentToAdd = NULL;
-
-    while (current != NULL)
+    FILE *file = fopen("../Sources/db/Department_data.dat", "rb");
+    if (file != NULL)
     {
-        Student *currentStudent = (Student *)current->dataPtr;
-        if (currentStudent->id == studentId)
-        {
-            studentToAdd = currentStudent;
-            break;
-        }
-        current = current->next;
-    }
+        Department *department = (Department *)malloc(sizeof(Department));
 
-    if (studentToAdd != NULL)
-    {
-        struct Node *newNode = createNode(studentToAdd);
-        if (newNode)
+        while (fread(department, sizeof(Department), 1, file) == 1)
         {
-            if (course->students_list == NULL)
+            printf("Department ID: %s\n", department->dept_id);
+            printf("Department Name: %s\n", department->name);
+            printf("Chairperson: %s\n", department->chairperson);
+            printf("Courses Count: %d\n", department->course_count);
+
+            printf("Courses:\n");
+            for (uint16_t i = 0; i < department->course_count; ++i)
             {
-                course->students_list = newNode;
+                printf("Course ID: %s\n", department->courses[i].course_id);
+                printf("Course Name: %s\n", department->courses[i].course_name);
             }
-            else
+
+            printf("Faculties:\n");
+            for (uint16_t i = 0; i < department->faculty_count; ++i)
             {
-                struct Node *temp = course->students_list;
-                while (temp->next != NULL)
+                printf("Faculty Username: %s\n", department->faculties[i].username);
+                printf("Faculty Name: %s\n", department->faculties[i].name);
+            }
+
+            printf("Students:\n");
+            for (uint16_t i = 0; i < department->student_count; ++i)
+            {
+                printf("Student Username: %s\n", department->students[i].username);
+                printf("Student Name: %s\n", department->students[i].name);
+            }
+        }
+
+        fclose(file);
+        free(department);
+    }
+    else
+    {
+        printf("Error opening file for reading!\n");
+    }
+}
+
+// void addCourseToStudent(char *username)
+// {
+//     FILE *studentFile = fopen("../Sources/db/student_data.dat", "r+b");
+//     FILE *courseFile = fopen("../Sources/db/Course_data.dat", "rb");
+
+//     char inputUsername[MAX_LENGTH];
+//     printf("Enter student username to view available courses: ");
+//     scanf("%49s", inputUsername);
+
+//     Student *student =  (Student *)malloc(sizeof(Student));;
+//     bool studentFound = false;
+
+//     while (fread(student, sizeof(Student), 1, studentFile) == 1)
+//     {
+//         if (strcmp(student->username, inputUsername) == 0)
+//         {
+//             studentFound = true;
+//             break;
+//         }
+//     }
+
+//     if (!studentFound)
+//     {
+//         printf("Student not found with the given username: %s\n", inputUsername);
+//         fclose(studentFile);
+//         fclose(courseFile);
+//         return;
+//     }
+
+//     bool departmentHasCourses = false;
+
+//     fseek(courseFile, 0, SEEK_SET);
+//     Course *course = (Course *)malloc(sizeof(Course));
+
+//     printf("%-12s%-12s%-10s\n", "Course ID", "Course Name", "Course Credit");
+//     printf("------------------------------------------\n");
+//     while (fread(course, sizeof(Course), 1, courseFile) == 1)
+//     {
+//         if (
+//             (strcmp(student->department, "CSE") == 0 && course->dept_course[0]) ||
+//             (strcmp(student->department, "EEE") == 0 && course->dept_course[1]) ||
+//             (strcmp(student->department, "Pharmacy") == 0 && course->dept_course[2]) ||
+//             (strcmp(student->department, "Mathematical and Physical Sciences") == 0 && course->dept_course[3]) ||
+//             (strcmp(student->department, "Non-Elective") == 0 && course->dept_course[4]))
+//         {
+//             printf("  %-12s%-12s%-10.2f\n", course->course_id, course->course_name, course->course_credit);
+//            // printf("\n");
+//             departmentHasCourses = true;
+//         }
+//     }
+
+//     if (!departmentHasCourses)
+//     {
+//         printf("No courses available for your department.\n");
+//         return;
+//     }
+
+//     int depIndex = -1;
+
+//     for (int i = 0; i < 5; ++i)
+//     {
+//         if (student->std_dep[i])
+//         {
+//             depIndex = i;
+//             break;
+//         }
+//     }
+
+//     int courseCount = 0;
+//     const int MAX_CURRENT_COURSES = 5;
+
+//     while (courseCount < 5)
+//     {
+//         printf("Enter Course ID %d: ", courseCount + 1);
+//         char selectedCourseID[MAX_LENGTH];
+//         scanf("%49s", selectedCourseID);
+
+//         if (strcmp(selectedCourseID, "done") == 0)
+//         {
+//             if (courseCount < 3)
+//             {
+//                 printf("Minimum %d courses need to be selected.\n", 3);
+//             }
+//             else
+//             {
+//                 break;
+//             }
+//         }
+//         else
+//         {
+//             bool found = false;
+
+//             fseek(courseFile, 0, SEEK_SET);
+//             while (fread(&course, sizeof(Course), 1, courseFile) == 1)
+//             {
+//                 if (depIndex != -1 && course->dept_course[depIndex] && strcmp(course->course_id, selectedCourseID) == 0)
+//                 {
+//                     if (student->num_current_courses < MAX_CURRENT_COURSES)
+//                     {
+//                         student->current_semester_courses[student->num_current_courses++] = course;
+//                         found = true;
+//                         courseCount++;
+//                     }
+//                     else
+//                     {
+//                         printf("Maximum number of courses reached for this semester.\n");
+//                         break;
+//                     }
+//                 }
+//             }
+//             if (!found)
+//             {
+//                 printf("Course ID %s not found or not available for your department. Please try again.\n", selectedCourseID);
+//             }
+//         }
+//     }
+
+//     if (studentFound)
+//     {
+//         fseek(studentFile, -sizeof(Student), SEEK_CUR);
+//         fwrite(&student, sizeof(Student), 1, studentFile);
+//     }
+//     else
+//     {
+//         printf("Student not found with the given username: %s\n", username);
+//     }
+
+//     fclose(studentFile);
+//     fclose(courseFile);
+// }
+
+
+
+
+void printSingleStudentInfo(char *username)
+{
+    FILE *file = fopen("../Sources/db/student_data.dat", "rb");
+    if (file != NULL)
+    {
+        Student student;
+
+        while (fread(&student, sizeof(Student), 1, file) == 1)
+        {
+            if (strcmp(student.username, username) == 0)
+            {
+                printf("Student Username: %s\n", student.username);
+                printf("Student Password: %s\n", student.password);
+                printf("Student Name: %s\n", student.name);
+                printf("Student ID: %d\n", student.id);
+                printf("Student Department: %s\n", student.department);
+                printf("Completed Credit Hours: %.2f\n", student.completed_credit);
+                printf("Student Advisor: %s\n", student.advisor);
+                printf("Student CGPA: %.2f\n", student.cgpa);
+                printf("Department Information:\n");
+                if (student.std_dep[0])
+                    printf("  CSE\n");
+                if (student.std_dep[1])
+                    printf("  EEE\n");
+                if (student.std_dep[2])
+                    printf("  Pharmacy\n");
+                if (student.std_dep[3])
+                    printf("  Mathematical and Physical Sciences\n");
+                if (student.std_dep[4])
+                    printf("  Non-Elective\n");
+
+                printf("Allocated Courses:\n");
+                if (student.num_current_courses > 0 && student.current_semester_courses != NULL)
                 {
-                    temp = temp->next;
+                    for (int i = 0; i < student.num_current_courses; ++i)
+                    {
+                        printf("- Course ID: %s\n", student.current_semester_courses[i].course_id);
+                        printf("  Course Name: %s\n", student.current_semester_courses[i].course_name);
+                    }
                 }
-                temp->next = newNode;
+                else
+                {
+                    printf("No allocated courses for this student.\n");
+                }
+                printf("\n");
+
+                // free(student.current_semester_courses);
+                fclose(file);
+                return;
             }
-            log_print(l, "Student with ID %d added to the course.\n", studentId);
         }
-        else
-        {
-            log_print(l, "Memory allocation failed.\n");
-        }
+
+        printf("Student with username '%s' not found.\n", username);
+        fclose(file);
     }
     else
     {
-        log_print(l, "Student with ID %d not found.\n", studentId);
+        printf("Error opening file for reading!\n");
     }
 }
 
-void addFacultyToCourse(struct Personalized_DS *facultyList, Course *course, char *facultyUsername)
+bool studentExist(char* username,char * password){
+    FILE *file = fopen("../Sources/db/student_data.dat", "rb");
+    if (file != NULL)
+    {
+        Student student;
+
+        while (fread(&student, sizeof(Student), 1, file) == 1)
+        {
+            if (strcmp(student.username, username) == 0 && strcmp(student.password, password) == 0 )
+            {
+                fclose(file);
+                return true;
+            }
+        }
+
+        printf("Student with username %s not found.\n", username);
+        fclose(file);
+        return false;
+    }
+    else
+    {
+        printf("Error opening file for reading!\n");
+        return false;
+    }
+}
+
+void StudentChangePassword(char *username)
 {
-    struct Node *current = facultyList->head;
-    Faculty *facultyToAdd = NULL;
-
-    while (current != NULL)
+    FILE *file = fopen("../Sources/db/student_data.dat", "rb+");
+    if (file != NULL)
     {
-        Faculty *currentFaculty = (Faculty *)current->dataPtr;
-        if (strcmp(currentFaculty->username, facultyUsername) == 0)
-        {
-            facultyToAdd = currentFaculty;
-            break;
-        }
-        current = current->next;
-    }
+        Student student;
 
-    if (facultyToAdd != NULL)
-    {
-        struct Node *newNode = createNode(facultyToAdd);
-        if (newNode)
+        while (fread(&student, sizeof(Student), 1, file) == 1)
         {
-            if (course->allocated_faculty == NULL)
+            if (strcmp(student.username, username) == 0)
             {
-                course->allocated_faculty = strdup(facultyUsername);
-            }
-            else
-            {
-                log_print(l, "This course already has a faculty assigned.\n");
+                char newPassword[50];
+                printf("Enter new password for username '%s': ", username);
+                scanf("%49s", newPassword);
+                fseek(file, -sizeof(Student), SEEK_CUR);
+                strcpy(student.password, newPassword);
+                fwrite(&student, sizeof(Student), 1, file);
+                fclose(file);
+                printf("Password updated successfully for username: %s\n", username);
+                return;
             }
         }
+
+        fclose(file);
+        printf("Student with username '%s' not found.\n", username);
     }
     else
     {
-        log_print(l, "Faculty with username %s not found.\n", facultyUsername);
+        printf("Error opening file for reading!\n");
     }
 }
+
+
+
+// uint16_t main()
+// {
+//     struct Personalized_DS *studentList = Singly_LL();
+//     struct Personalized_DS *facultyList = Singly_LL();
+//     struct Personalized_DS *courseList = Singly_LL();
+//     struct Personalized_DS *departmentList = Singly_LL();
+
+//     uint16_t choice;
+//     do
+//     {
+//         printf("\n---- Menu ----\n");
+//         printf("1. Add Student\n");
+//         printf("2. Pruint Student Data\n");
+//         printf("3. Add Faculty\n");
+//         printf("4. Pruint Faculty Data\n");
+//         printf("5. Add Course\n");
+//         printf("6. Pruin Course Data\n");
+//         printf("7. Add Department\n");
+//         printf("8. Pruint16_t Department Data\n");
+//         printf("9. Exit\n");
+
+//         printf("Enter your choice: ");
+//         scanf("%d", &choice);
+
+//         switch (choice)
+//         {
+//         case 1:
+//             addStudentData(studentList);
+//             break;
+//         case 2:
+//             printf("----- Student Data -----\n");
+//             printStudentData();
+//             break;
+//         case 3:
+//             addFacultyData(facultyList);
+//             break;
+//         case 4:
+//             printf("----- Faculty Data -----\n");
+//             printFacultyData();
+//             break;
+//         case 5:
+//             addCourseData(courseList, facultyList);
+//             break;
+//         case 6:
+//             printf("----- Course Data -----\n");
+//             printCourseData(courseList);
+//             break;
+//         case 7:
+//             addDepartmentData(departmentList);
+//             break;
+//         case 8:
+//             printf("----- Department Data -----\n");
+//             printDepartmentData(departmentList);
+
+//             break;
+//         case 9:
+//             addCourseToStudent(courseList);
+//             break;
+//         default:
+//             printf("Invalid choice. Please try again.\n");
+//         }
+//     } while (choice != 10);
+
+//     return 0;
+// }
