@@ -1,66 +1,23 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-typedef struct Course Course;
-typedef struct Faculty Faculty;
-typedef struct Student Student;
-typedef struct Department Department;
+// #include <stdio.h>
 
-typedef struct Student
+typedef struct dict_t_struct
 {
-    char *username; // Unique key!
-    char *password;
-    char *name;
-    int id;
-    char *department;
-    float completed_credit;
-    Course *current_semester_course;
-    Course *completed_courses;
-    char *advisor;
-    float cgpa;
+    char *key;
+    void *value;
+    struct dict_t_struct *next;
+} dict_t;
 
-} Student;
+dict_t **dictAlloc(void);
 
-typedef struct Course
-{
-    char *course_id;
-    char *course_name;
-    int course_code;
-    char *allocated_faculty;
-    int section;
-    int time_slot;
-    int student_number;
-    char *department;
-    Student *students_list;
-} Course;
+void dictDealloc(dict_t **dict);
 
-typedef struct Faculty
-{
-    char *username; // Unique key!
-    char *password;
-    char *name;
-    char *department;
-    char *allocated_courses;
-    char *designation;
-    char *educational_background;
-} Faculty;
+void *getItem(dict_t *dict, char *key);
 
-typedef struct Department
-{
-    char *dept_id;
-    char *name;
-    Course *courses;
-    int course_count;
-    Faculty *faculties;
-    int faculty_count;
-    char *chairperson;
-    Student *students;
-    int student_count;
-} Department;
+void delItem(dict_t **dict, char *key);
 
-// #define struct Student * stp
-// #define struct Department * dtp
-// #define struct Faculty * ftp
-// #define struct Course * ctp
+void addItem(dict_t **dict, char *key, void *value);
 
 #endif

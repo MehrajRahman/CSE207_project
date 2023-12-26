@@ -4,7 +4,7 @@
     "*.csv": "csv (semicolon)",
     "stdio.h": "c",
     "menu.h": "c",
-    "structure_dynamic.h": "c",
+    "portal_system.h": "c",
     "typeinfo": "c",
     "logger.h": "c",
     "string.h": "c",
