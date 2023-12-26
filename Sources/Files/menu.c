@@ -67,6 +67,9 @@ void Admin_Menu()
 void intro()
 {
     l = init_logger(stdout, stderr, stderr);
+      log_print(l, "\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
+    log_print(l, "\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
+    
     log_print(l, "\n\n\n\t\t\t\t\t 	\033[33m||||||||||||    |||    ||    |||    |||        |||          \033[0m \n");
     log_print(l, "\t\t\t\t\t 	\033[33m|||      |||    |||    ||    |||    |||        |||          \033[0m \n");
     log_print(l, "\t\t\t\t\t	\033[33m|||              |||   ||   |||     |||        |||          \033[0m \n");
@@ -78,34 +81,7 @@ void intro()
 
     log_print(l, "\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
     log_print(l, "\t\t	\033[34m||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||   \033[0m \n");
-    timer();
-    system("@cls||clear");
-    Login_Menu();
-    int choice;
-    do
-    {
-        Login_Menu();
-        scanf("%d", &choice);
-
-        switch (choice)
-        {
-        case 1:
-            // addStudent(Info_std);
-            log_print(l, "Exiting...\n");
-            
-            break;
-        case 2:
-            
-            log_print(l, "Exiting...\n");
-            break;
-        case 3:
-            log_print(l, "Exiting...\n");
-            break;
-        default:
-            log_print(l, "Invalid choice! Please enter a valid option.\n");
-        }
-    } while (choice != 3);
-    shutdown_logger(l);
+    
 }
 
 void Student_menu()

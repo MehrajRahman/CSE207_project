@@ -1,25 +1,28 @@
-# Ignore all
-*
+# # Ignore all
+# *
+!.o
+!.d
 
-# Unignore all with extensions
-!*.*
+# # Unignore all with extensions
+# !*.*
 
-# Unignore all dirs
-!*/
+# # Unignore all dirs
+# !*/
 
-!makefile
+# !makefile
 
-### Above combination will ignore all files without extension ###
 
-# Ignore files with extension `.class` & `.exe`
-*.class
-*.exe
-*.txt
+# ### Above combination will ignore all files without extension ###
 
-# Ignore `bin` dir
-bin/
-# or
-*/bin/*
+# # Ignore files with extension `.class` & `.exe`
+# *.class
+# *.exe
+# *.txt
 
-# Unignore all `.exe` in `bin` dir
-!*/bin/*.exe
+# # Ignore `bin` dir
+# bin/
+# # or
+# */bin/*
+
+# # Unignore all `.exe` in `bin` dir
+# !*/bin/*.exe

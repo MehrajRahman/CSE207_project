@@ -15,6 +15,8 @@ void Admin_Menu();
 
 void intro();
 
+void header();
+
 void Student_menu();
 
 void Faculty_Menu();

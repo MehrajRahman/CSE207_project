@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../headers/Structure_Dynamic.h"
+#include "../headers/portal_system.h"
 #include "../headers/timer.h"
 #include "../headers/menu.h"
 #include "../headers/logger.h"
@@ -21,41 +21,42 @@ void shutdown_systems(){
  }
 
 int main(){
-
+  system("@cls||clear");
     intro();
     init_systems();
     // Admin_Menu();
     // timer();
     struct Personalized_DS *Info_std = Singly_LL();
 
+    timer();
+    system("@cls||clear");
+    intro();
+    Login_Menu();
     int choice;
-    // do
-    // {
-    //     log_print(l,"Menu:\n");
-    //     log_print(l,"1. Add Student\n");
-    //     log_print(l,"2. Print Students\n");
-    //     log_print(l,"3. Exit\n");
-    //     log_print(l,"Enter your choice: ");
-    //     scanf("%d", &choice);
+    do
+    {
+        // Login_Menu();
+        scanf("%d", &choice);
 
-    //     switch (choice)
-    //     {
-    //     case 1:
-    //         addStudent(Info_std);
-    //         break;
-    //     case 2:
-    //         printStudents(Info_std);
-    //         break;
-    //     case 3:
-    //         log_print(l, "Exiting...\n");
-    //         break;
-    //     default:
-    //         log_print(l, "Invalid choice! Please enter a valid option.\n");
-    //     }
-    // } while (choice != 3);
-
-    // freeList(Info_std, STUDENT);
-    shutdown_systems();
+        switch (choice)
+        {
+        case 1:
+            // addStudent(Info_std);
+            log_print(l, "Exiting...\n");
+            
+            break;
+        case 2:
+            
+            log_print(l, "Exiting...\n");
+            break;
+        case 3:
+            log_print(l, "Exiting...\n");
+            break;
+        default:
+            log_print(l, "Invalid choice! Please enter a valid option.\n");
+        }
+    } while (choice != 3);
+    shutdown_logger(l);
 
     return 0;
 }

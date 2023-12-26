@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "../headers/Structure_Dynamic.h"
+#include "../headers/portal_system.h"
 #include "../headers/menu.h"
 
 #ifndef __cplusplus
