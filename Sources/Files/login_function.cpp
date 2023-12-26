@@ -16,18 +16,17 @@ static const bool true = 1;
 
 #define MAX_LIMIT 50
 
-bool Login_Credential_Check_Student(char *username, char *password, int numStudents, Student *students)
+bool Login_Credential_Check_Student(char *username, char *password, dict_t **dict_std)
 {
     bool found = false;
-
-    for (int i = 0; i < numStudents; i++)
-    {
-        if (strcmp(username, students[i].username) == 0 && strcmp(password, students[i].password) == 0)
-        {
-            found = true;
-            break;
-        }
-    }
+    // for (int i = 0; i < numStudents; i++)
+    // {
+    //     if (strcmp(username, students[i].username) == 0 && strcmp(password, students[i].password) == 0)
+    //     {
+    //         found = true;
+    //         break;
+    //     }
+    // }
     return found;
 }
 

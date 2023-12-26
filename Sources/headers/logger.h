@@ -2,7 +2,7 @@
 #define LOGGER_H
 
 #include <stdio.h>
-
+#include <stdlib.h>
 struct logger
 {
     FILE *f_print;
