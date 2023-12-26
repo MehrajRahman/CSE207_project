@@ -1,26 +1,31 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <stdio.h>
+void addStudent(struct Personalized_DS *Info);
 
+void addStudentData();
 
+void printStudentData();
 
-typedef struct dict_t_struct
-{
-    char *key;
-    void *value;
-    struct dict_t_struct *next;
-} dict_t;
+void addFacultyData();
 
-dict_t **dictAlloc(void);
+void printFacultyData();
 
-void dictDealloc(dict_t **dict);
+void addCourseData();
 
-void *getItem(dict_t *dict, char *key);
+void printCourseData();
 
-void delItem(dict_t **dict, char *key);
+void addDepartmentData();
 
-void addItem(dict_t **dict, char *key, void *value);
+void printDepartmentData();
+
+void addCourseToStudent(char *username);
+
+void printSingleStudentInfo(char *username);
+
+void StudentChangePassword(char *username);
+
+bool studentExist(char* username,char * password);
 
 
 #endif

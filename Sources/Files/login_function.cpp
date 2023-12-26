@@ -16,7 +16,7 @@ static const bool true = 1;
 
 #define MAX_LIMIT 50
 
-bool Login_Credential_Check_Student(char *username, char *password, dict_t **dict_std)
+bool Login_Credential_Check_Student(char *username, char *password)
 {
     bool found = false;
     // for (int i = 0; i < numStudents; i++)

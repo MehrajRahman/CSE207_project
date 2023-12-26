@@ -44,6 +44,8 @@ void init_data(){
 
 
 int main(){
+    char buff[10];
+    char username[50],uname[50], password[50];
     system("@cls||clear");
 
     
@@ -66,46 +68,53 @@ int main(){
     int choice;
     do
     {
+        
         Login_Menu();
+        log_print(l , "\t\t\t\t\t\t\t\xB2 Enter Input : ");
         scanf("%d", &choice);
 
         switch (choice)
         {
         case 1:
-            
-            break;
-        case 2:
-            char buff[10];
-            fgets(buff, sizeof(buff), stdin);
-            char username[50],uname[50], password[50];
+        fgets(buff, sizeof(buff), stdin);
+            // char username[50],uname[50], password[50];
             printf("Enter Username: ");
             scanf("%49s", username);
             printf("Enter Password: ");
             scanf("%49s", password);
             if(strcmp("Admin", username) == 0 && strcmp("Admin", username) == 0  ){
+                system("@cls||clear");
                 Admin_Menu();
             }else{
                 printf("Wrong Credentails!! \n");
             }
             break;
+            
+            break;
+        case 2:
+            
+            
         case 3:
-            char buff[10];
+            // char buff[10];
             fgets(buff, sizeof(buff), stdin);
-            char username[50],uname[50], password[50];
+           
             printf("Enter Username: ");
             scanf("%49s", username);
             printf("Enter Password: ");
             scanf("%49s", password);
             if(studentExist(username, password)){
+                system("@cls||clear");
                 Student_menu(username);
             }else{
                 printf("Wrong Credentails!!\n");
             }
             break;
         case 4:
+            system("@cls||clear");
             addStudentData(Info_std);
             break;
         case 5:
+            system("@cls||clear");
             addCourseData(course_list, faculty_list);
             break;
         default:

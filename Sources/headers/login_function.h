@@ -7,7 +7,7 @@
 #include "portal_system.h"
 // #include "menu.h"
 
-bool Login_Credential_Check_Student(char *username, char *password, dict_t **dict_std);
+bool Login_Credential_Check_Student(char *username, char *password);
 
 bool Login_Credential_Check_Faculty(char *username, char *password, int numFaculties, Faculty *faculties);
 

@@ -37,31 +37,5 @@ void printData(struct Personalized_DS *Info, enum DataType type);
 
 void freeList(struct Personalized_DS *Info, enum DataType type);
 
-void addStudent(struct Personalized_DS *Info);
-
-void addStudentData(struct Personalized_DS *Info);
-
-void printStudentData();
-
-void addFacultyData(struct Personalized_DS *Info);
-
-void printFacultyData();
-
-void addCourseData(struct Personalized_DS *courseList, struct Personalized_DS *facultyList);
-
-void printCourseData(struct Personalized_DS *courseList);
-
-void addDepartmentData(struct Personalized_DS *Info);
-
-void printDepartmentData(struct Personalized_DS *departmentlist);
-
-void addCourseToStudent(char *username);
-
-void printSingleStudentInfo(char *username);
-
-void StudentChangePassword(char *username);
-
-bool studentExist(char* username,char * password);
-
 
 #endif
