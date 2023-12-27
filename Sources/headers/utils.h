@@ -1,7 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-void addStudent(struct Personalized_DS *Info);
+void addStudent(char * username);
+
 
 void addStudentData();
 

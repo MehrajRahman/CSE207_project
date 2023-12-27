@@ -6,6 +6,7 @@
 #include "../headers/timer.h"
 #include "../headers/logger.h"
 #include "../headers/LinearDS.h"
+#include "../headers/utils.h"
 
 static struct logger* l=NULL;
 
@@ -72,6 +73,8 @@ void Login_Menu()
         textcolor(3);
         log_print(l , "\t\t\t\t\t\t\t\xB2 3. Student\n\n");
         textcolor(5);
+        log_print(l , "\t\t\t\t\t\t\t\xB2 4. Exit\n\n");
+        textcolor(5);
         log_print(l , "\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
         textcolor(4);
 }
@@ -118,6 +121,7 @@ void Admin_Menu_Student()
         case 5:
             log_print(l, "Goodbye!!!!.\n");
             timer();
+            system("@cls||clear");
             return;
             break;
         default:
@@ -172,6 +176,7 @@ void Admin_Menu_Faculty()
         case 5:
             log_print(l, "Goodbye!!!!.\n");
             timer();
+            system("@cls||clear");
             return;
             break;
         default:
@@ -227,10 +232,18 @@ void Admin_Menu_Courses()
             printCourseData();
             break;
         case 5:
+            printCourseData();
+            break;
+           
+        case 6:
+            log_print(l, "Work In Progress! \n");
+            break;
+        case 7:
             log_print(l, "Goodbye!!!!.\n");
             timer();
+            system("@cls||clear");
             return;
-            break;
+
         default:
             log_print(l, "Invalid choice! Please enter a valid option.\n");
         }
@@ -290,7 +303,7 @@ void Admin_Menu()
             break;
         case 3:
         system("@cls||clear");
-            Admin_Menu_Faculty();
+            Admin_Menu_Courses();
             break;
         case 4:
         system("@cls||clear");
@@ -299,6 +312,13 @@ void Admin_Menu()
         case 5:
             log_print(l, "Goodbye!!!!.\n");
             timer();
+            system("@cls||clear");
+            return;
+            break;
+        case 6:
+            log_print(l, "Goodbye!!!!.\n");
+            timer();
+            system("@cls||clear");
             return;
             break;
         default:
@@ -402,6 +422,7 @@ void Student_menu(char *username)
         case 6:
             log_print(l, "Goodbye!!!!.\n");
             timer();
+            system("@cls||clear");
             return;
             break;
         default:

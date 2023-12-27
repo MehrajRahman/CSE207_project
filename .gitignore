@@ -1,7 +1,7 @@
 # # Ignore all
 # *
-!.o
-!.d
+# !.o
+# !.d
 
 # # Unignore all with extensions
 # !*.*

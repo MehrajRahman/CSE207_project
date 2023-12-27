@@ -110,8 +110,7 @@ int main(){
             }
             break;
         case 4:
-            system("@cls||clear");
-            addStudentData(Info_std);
+            return 0;
             break;
         case 5:
             system("@cls||clear");
@@ -121,7 +120,7 @@ int main(){
             
             log_print(l, "Invalid choice! Please enter a valid option.\n");
         }
-    } while (choice != 10);
+    } while (choice != 4);
 
 
     
